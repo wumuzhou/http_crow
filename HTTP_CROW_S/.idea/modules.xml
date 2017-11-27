@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../HTTP_CROW/.idea/AWHTTP_CROW_C_MYSQL.iml" filepath="$PROJECT_DIR$/../HTTP_CROW/.idea/AWHTTP_CROW_C_MYSQL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/HTTP_CROW_S.iml" filepath="$PROJECT_DIR$/.idea/HTTP_CROW_S.iml" />
+    </modules>
+  </component>
+</project>
