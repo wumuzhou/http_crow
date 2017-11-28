@@ -7,15 +7,13 @@
 #include "logging.hpp"
 #include "sql_work.hpp"
 
-
-#define DB1 "account"
 using namespace std;
 
 
 ConnectionPool_T pool_sql;
 
 int init_log_conf() {
-    std::ifstream settings("settings.txt");
+    std::ifstream settings("http_log_settings.txt");
     if (!settings.is_open()) {
         BOOST_LOG_SEV(logger::get(), 5) << "Could not open settings.txt file";
         return 1;
@@ -28,29 +26,34 @@ int init_log_conf() {
     return 0;
 }
 
-void sql_init(SqlConnInfo& sqlConnInfo) {
+bool sql_init(SqlConnInfo& sqlConnInfo) {
+
     // setting sql
     configure_sql_info(sqlConnInfo);
-    LOG_IMPORTANT << "sqlConnInfo.max_conn_num==" << sqlConnInfo.max_conn_num;
+    LOG_IMPORTANT << "sqlConnInfo.pool_size==" << sqlConnInfo.pool_size;
     LOG_IMPORTANT << "sqlConnInfo.ip==" << sqlConnInfo.ip;
     LOG_IMPORTANT << "sqlConnInfo.port==" << sqlConnInfo.port;
     LOG_IMPORTANT << "sqlConnInfo.user_name==" << sqlConnInfo.user_name;
     LOG_IMPORTANT << "sqlConnInfo.password==" << sqlConnInfo.password;
+    LOG_IMPORTANT << "sqlConnInfo.db1==" << sqlConnInfo.db1;
+
     // init sql
     std::string mysql_url_db1 =
-            "mysql://" + sqlConnInfo.ip + "/" + DB1 + "?user=" + sqlConnInfo.user_name + "&password=" +
+            "mysql://" + sqlConnInfo.ip + "/" + sqlConnInfo.db1 + "?user=" + sqlConnInfo.user_name + "&password=" +
             sqlConnInfo.password;
-    LOG_IMPORTANT << "mysql_url_db1==   " << mysql_url_db1;
+    LOG_IMPORTANT<<"mysql_url_db1==   " <<mysql_url_db1;
     URL_T url = URL_new(mysql_url_db1.c_str());
 
     if (url == NULL) {
-        printf("URL parse ERROR!\n");
+        LOG_ERROR<<"URL parse ERROR!";
+        return false;
     }
     pool_sql = ConnectionPool_new(url);
+
     //init num of pool connect
     ConnectionPool_setInitialConnections(pool_sql, 5);
     ConnectionPool_start(pool_sql);
-
+    return true;
 }
 
 
@@ -61,9 +64,7 @@ int main() {
     SqlConnInfo sqlConnInfo;
     //1. start config
     configure_http_port(PORT);
-    LOG_IMPORTANT << "SERVER PORT=== " << PORT;
-
-    sql_init(sqlConnInfo);
+    if(not sql_init(sqlConnInfo)) exit(0);
 
     //2.  running in daemon
     if (daemon(1, 0) == -1) {

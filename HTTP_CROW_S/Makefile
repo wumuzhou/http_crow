@@ -4,7 +4,7 @@ OBJS =	http_server.o redis_c.o sql_work.o json_work.o
 
 LIBS =-lboost_system -lboost_thread -lboost_regex -lboost_system -lhiredis -lboost_regex\
 	  -lboost_log_setup -lboost_log -lzdb \
-	  -lpthread -lcrypto -ldl -lhiredis -Wl,-rpath,/usr/local/lib
+	  -lpthread -lcrypto -lssl -ldl -lhiredis -Wl,-rpath,/usr/local/lib
 
 TARGET =	http_server
 
