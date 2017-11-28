@@ -12,7 +12,7 @@
 #include "logging.hpp"
 
 
-namespace aiwei{
+namespace http_crow{
 	class CJsonOpt
 	{
 

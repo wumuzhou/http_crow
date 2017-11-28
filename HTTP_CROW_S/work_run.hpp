@@ -36,7 +36,7 @@ void work_http1(crow::SimpleApp &app) {
                 if (req.url_params.get("phone") != nullptr) {
                     std::ostringstream os;
                     CSqlOpt csql ;
-                    aiwei::CJsonOpt c_json;
+                    http_crow::CJsonOpt c_json;
                     int status ;
                     std::string phone = req.url_params.get("phone");
                     int result = csql.IsUserActivateFromDB(phone, status);

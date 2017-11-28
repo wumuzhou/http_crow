@@ -7,12 +7,11 @@
 #include <boost/thread/thread.hpp>
 #include <boost/thread/barrier.hpp>
 
-using namespace aiwei;
+using namespace http_crow;
 using namespace rapidjson;
 
 void CJsonOpt::join_string_IsUserActivate(std::ostringstream& os, int& status)
 {
-	LOG_TRACE << "this is a join_string_IsUserActivate enter";
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();               // Between StartObject()/EndObject(),
@@ -21,7 +20,7 @@ void CJsonOpt::join_string_IsUserActivate(std::ostringstream& os, int& status)
     writer.EndObject();
     os << s.GetString();
 //    boost::this_thread::sleep(boost::posix_time::milliseconds( 1000*1000 ) );
-    LOG_TRACE << "this is a join_string_IsUserActivate leave";
+    LOG_TRACE << "this is a join_string_IsUserActivate";
 
 }
 
