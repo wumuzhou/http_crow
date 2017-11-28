@@ -26,9 +26,6 @@ public:
 
 public:
 	int IsUserActivateFromDB(const std::string& account_name, int& activate_status);
-private:
-//	bool get_bind_device_id(std::string& bind_deviceid, std::string& old_device, std::string& need_deviceid_str ,const int& size);
-
 
 };
 
